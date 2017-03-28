@@ -22,10 +22,10 @@
  */
 use oat\tao\scripts\install\AddLogFs;
 use oat\tao\scripts\install\AddTmpFsHandlers;
+use oat\tao\scripts\install\InstallNotificationTable;
+use oat\tao\scripts\install\RegisterValidationRules;
 use oat\tao\scripts\install\SetClientLoggerConfig;
 use oat\tao\scripts\install\SetServiceFileStorage;
-use oat\tao\scripts\install\RegisterValidationRules;
-use oat\tao\scripts\install\InstallNotificationTable;
 
 $extpath = dirname(__FILE__) . DIRECTORY_SEPARATOR;
 
