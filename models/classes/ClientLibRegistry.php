@@ -19,6 +19,7 @@
  */
 namespace oat\tao\model;
 
+use common_exception_Error;
 use common_ext_ExtensionsManager;
 use common_Logger;
 use oat\oatbox\AbstractRegistry;
@@ -74,14 +75,13 @@ class ClientLibRegistry extends AbstractRegistry
 
         return $extensionsAliases;
     }
-    
-    
+
     /**
      * Register a new path for given alias, trigger a warning if path already register
-     *
      * @author Lionel Lecaque, lionel@taotesting.com
      * @param string $id
      * @param string $fullPath
+     * @throws common_exception_Error
      */
     public function register($id, $fullPath)
     {
@@ -90,9 +90,9 @@ class ClientLibRegistry extends AbstractRegistry
         }
 
         if (substr($fullPath, 0, strlen('../../../')) == '../../../') {
-            $fullPath = tao_helpers_Uri::getRootUrl() . substr($fullPath, strlen('../../../'));
+            $fullPath = substr($fullPath, strlen('../../../'));
         }
-        
+
         $found = false;
         foreach (\common_ext_ExtensionsManager::singleton()->getInstalledExtensions() as $ext) {
             if ($ext->hasConstant('BASE_WWW') && strpos($fullPath, $ext->getConstant('BASE_WWW')) === 0) {
@@ -106,7 +106,7 @@ class ClientLibRegistry extends AbstractRegistry
             
         }
         if ($found == false) {
-            throw new \common_exception_Error('Path "'.$fullPath.'" is not a valid asset path in Tao');
+            throw new common_exception_Error('Path "' . $fullPath . '" is not a valid asset path in Tao');
         }
     }
 }
